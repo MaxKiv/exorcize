@@ -48,7 +48,6 @@
 
           # Additional development tools (optional)
           black
-          ruff
           isort
           python312Packages.flake8
           python312Packages.pytest
