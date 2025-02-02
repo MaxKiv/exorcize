@@ -18,14 +18,14 @@ pub fn acronym(word: &str) -> String {
 pub fn abbreviate(phrase: &str) -> String {
     phrase
         .chars()
-        .map(|c| if c == '-' { ' ' } else { c })        // Replace dashes with spaces
-        .collect::<String>()                            // Collect into a String for further processing
-        .split_whitespace()                             // Split into words
+        .map(|c| if c == '-' { ' ' } else { c }) // Replace dashes with spaces
+        .collect::<String>() // Collect into a String for further processing
+        .split_whitespace() // Split into words
         .map(|word| {
             word.chars()
                 .filter(|c| c.is_alphabetic())
                 .collect::<String>()
-        })                                              // Filter out non-alphabetic characters
-        .map(|word| acronym(&word))                     // Generate acronym for each word
-        .collect::<String>()                            // Collect all acronyms into a single String
+        }) // Filter out non-alphabetic characters
+        .map(|word| acronym(&word)) // Generate acronym for each word
+        .collect::<String>() // Collect all acronyms into a single String
 }

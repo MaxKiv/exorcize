@@ -5,7 +5,7 @@ How to play blackjack:    https://bicyclecards.com/how-to-play/blackjack/
 """
 
 
-def value_of_card(card):
+def value_of_card(card: str):
     """Determine the scoring value of a card.
 
     :param card: str - given card.
@@ -15,8 +15,17 @@ def value_of_card(card):
     2.  'A' (ace card) = 1
     3.  '2' - '10' = numerical value.
     """
+    card_values = {
+        "J": 10,
+        "Q": 10,
+        "K": 10,
+        "A": 1,
+        "a": 11,
+    }
 
-    pass
+    if card in card_values:
+        return card_values[card]
+    return int(card)
 
 
 def higher_card(card_one, card_two):
@@ -30,7 +39,11 @@ def higher_card(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    if value_of_card(card_one) == value_of_card(card_two):
+        return (card_one, card_two)
+    if value_of_card(card_one) > value_of_card(card_two):
+        return card_one
+    return card_two
 
 
 def value_of_ace(card_one, card_two):
@@ -44,7 +57,15 @@ def value_of_ace(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    # its beautiful
+    if card_one == "A":
+        card_one = "a"
+    elif card_two == "A":
+        card_two = "a"
+
+    if value_of_card(card_one) + value_of_card(card_two) + 11 > 21:
+        return 1
+    return 11
 
 
 def is_blackjack(card_one, card_two):
@@ -58,7 +79,9 @@ def is_blackjack(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    pass
+    return (card_one == "A" and value_of_card(card_two) == 10) or (
+        card_two == "A" and value_of_card(card_one) == 10
+    )
 
 
 def can_split_pairs(card_one, card_two):
@@ -68,7 +91,7 @@ def can_split_pairs(card_one, card_two):
     :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
     """
 
-    pass
+    return value_of_card(card_one) == value_of_card(card_two)
 
 
 def can_double_down(card_one, card_two):
@@ -78,4 +101,4 @@ def can_double_down(card_one, card_two):
     :return: bool - can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
     """
 
-    pass
+    return 8 < value_of_card(card_one) + value_of_card(card_two) < 12
