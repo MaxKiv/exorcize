@@ -1,5 +1,5 @@
 {
-  description = "Pyton project";
+  description = "Python project";
 
   inputs = {
     your-nixos-flake.url = "github:maxkiv/nix";

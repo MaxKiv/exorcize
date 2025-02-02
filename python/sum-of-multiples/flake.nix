@@ -1,5 +1,5 @@
 {
-  description = "Python project";
+  description = "Pyton project";
 
   inputs = {
     your-nixos-flake.url = "github:maxkiv/nix";
@@ -48,7 +48,6 @@
 
           # Additional development tools (optional)
           black
-          ruff
           isort
           python312Packages.flake8
           python312Packages.pytest

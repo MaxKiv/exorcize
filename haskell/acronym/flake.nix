@@ -1,29 +1,29 @@
 {
   description = "A development environment with GHC, Stack, Haskell Language Server etc";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+
+  inputs = {
+    your-nixos-flake.url = "github:maxkiv/nix";
+    nixpkgs.follows = "your-nixos-flake/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
 
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
-        hPkgs =
-          pkgs.haskell.packages."ghc927"; # need to match Stackage LTS version
-                                          # from stack.yaml snapshot
+        hPkgs = pkgs.haskell.packages."ghc927"; # need to match Stackage LTS version from stack.yaml snapshot
 
         hspec_2_7_10 = pkgs.haskell.lib.doJailbreak hPkgs.hspec_2_7_10;
-        # text_2_0_2 = pkgs.haskell.lib.doJailbreak hPkgs.hspec_2_7_10;
+        text_2_0_2 = hPkgs.text_2_0_2; # Ensure this version is used
 
         myDevTools = [
-          # hPkgs.ghc # GHC compiler in the desired version (will be available on PATH)
-
           # GHC compiler in the desired version (will be available on PATH)
           (hPkgs.ghcWithPackages (hpkgs: [
             # List of packages you want GHC to know about
             #hpkgs.xmonad
             hspec_2_7_10
-            hPkgs.text_2_0_2
+            text_2_0_2
             # hPkgs.hspec_2_7_10
             # hPkgs.hspec-discover_2_7_10
             # hPkgs.hspec-core_2_7_10
@@ -32,7 +32,6 @@
           ]))
 
           hPkgs.ghcid # Continuous terminal Haskell compile checker
-          # hPkgs.ormolu # Haskell formatter
           hPkgs.hlint # Haskell codestyle checker
           hPkgs.hoogle # Lookup Haskell documentation
           hPkgs.fast-tags # Lookup Haskell documentation
@@ -42,6 +41,7 @@
           # hPkgs.cabal-install
           stack-wrapped
           pkgs.zlib # External C library needed by some Haskell packages
+          pkgs.ormolu
         ];
 
         # Wrap Stack to work with our Nix integration. We don't want to modify

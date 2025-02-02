@@ -21,14 +21,13 @@
         inherit system;
       };
 
-      poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs;};
+      poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix {inherit pkgs;};
 
       # Use poetry2nix to create a Python environment from pyproject.toml
       pythonEnv = poetry2nix.mkPoetryEnv {
         projectDir = ./.;
         preferWheels = true;
       };
-
     in {
       # Development shells provided by this flake, to use:
       # nix develop .#default
@@ -45,6 +44,9 @@
 
           # Basedpyright (Pyright wrapper) for LSP support
           basedpyright
+
+          # Python linter
+          pylint
 
           # Additional development tools (optional)
           black
