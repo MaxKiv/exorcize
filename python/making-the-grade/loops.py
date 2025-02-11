@@ -1,7 +1,7 @@
 """Functions for organizing and calculating student exam scores."""
 
 
-def round_scores(student_scores):
+def round_scores(student_scores: list[float]):
     """Round all provided student scores.
 
     :param student_scores: list - float or int of student exam scores.
@@ -67,7 +67,7 @@ def student_ranking(student_scores: list[int], student_names: list[str]):
 
     out: list[str] = []
     for index, (score, name) in enumerate(zip(student_scores, student_names)):
-        out.append(f"{index+1}. {name}: {score}")
+        out.append(f"{index + 1}. {name}: {score}")
 
     return out
 
